@@ -1,5 +1,5 @@
 <?php
-include 'db_connect.php'; // Ensure the path is correct
+include 'db_connect.php'; 
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];

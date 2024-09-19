@@ -19,7 +19,7 @@
         }
 
         .sidebar {
-            width: 300px; /* Adjust width if needed */
+            width: 300px;
             background-color: #ECECEC;
             color: #000522;
             display: flex;
@@ -28,7 +28,7 @@
             box-sizing: border-box;
             border-radius: 20px 20px 0 0;
             position: relative;
-            font-family: 'Inter', sans-serif; /* Apply Inter font here */
+            font-family: 'Inter', sans-serif;
         }
 
         .sidebar img {
@@ -40,8 +40,8 @@
             width: 100%;
             color: #787272;
             text-decoration: none;
-            font-size: 16px; /* Adjusted font size */
-            margin: 10px 0; /* Margin to separate the links */
+            font-size: 16px;
+            margin: 10px 0;
             padding: 10px;
             border-radius: 30px 0 30px 0;
             display: flex;
@@ -50,7 +50,7 @@
         }
 
         .sidebar a i {
-            margin-right: 25px; /* Space between icon and text */
+            margin-right: 25px;
             margin-left: 10px;
         }
 
@@ -60,12 +60,12 @@
         }
 
         .sidebar .highlighted {
-            background-color: #2C2B6D; /* Highlight color for the active link */
+            background-color: #2C2B6D;
             color: #f0f0f0;
         }
 
         .sidebar .logout {
-            margin-top: auto; /* Moves the logout link to the bottom */
+            margin-top: auto;
             color: #787272;
             text-decoration: none;
             font-size: 16px;
@@ -154,7 +154,7 @@
             flex: 1;
             padding: 20px;
             box-sizing: border-box;
-            margin-left: 20px; /* Adjust margin to make space for the sidebar */
+            margin-left: 20px;
         }
 
         .dashboard-title {
@@ -164,7 +164,7 @@
             margin-bottom: 10px;
             margin-left: 20px;
             margin-top: 50px;
-            font-family: 'Comfortaa', cursive; /* Apply Comfortaa font here */
+            font-family: 'Comfortaa', cursive;
         }
 
         .date-display {
@@ -270,7 +270,8 @@
         <img src="img/QR CODE VERIFICATION SYSTEM LOGO.png" alt="Admin Dashboard Logo">
         <a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
         <a href="user_info.php"><i class="fas fa-users"></i> User Information</a>
-        <a href="qr_management.php"><i class="fas fa-qrcode"></i> QR Code Management</a>
+        <a href="qr_code_management.php"><i class="fas fa-qrcode"></i> QR Code Management</a>
+        <a href="time_management.php"><i class="fas fa-clock"></i> Time In/Out Management</a>
         <a href="activity_logs.php" class="highlighted"><i class="fas fa-clipboard-list"></i> Activity Logs</a>
         <a href="login.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </div>
@@ -288,10 +289,8 @@
     <div class="main-content">
         <div class="dashboard-title">Activity Logs</div>
         <div class="date-display"></div>
-        <!-- Main content here -->
     </div>
     <script>
-        // Toggle dropdown menu
         const profile = document.querySelector('.admin-profile');
         const dropdown = document.querySelector('.dropdown');
 
@@ -299,33 +298,17 @@
             dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
         });
 
-        // Close the dropdown if clicked outside
         document.addEventListener('click', (event) => {
             if (!profile.contains(event.target)) {
                 dropdown.style.display = 'none';
             }
         });
 
-        // Display current date
         document.addEventListener('DOMContentLoaded', () => {
-            const dateDisplay = document.querySelector('.date-display');
-            
-            // Create a date object for the current date
-            const today = new Date();
-            
-            // Define an array of month names
-            const months = [
-                'January', 'February', 'March', 'April', 'May', 'June',
-                'July', 'August', 'September', 'October', 'November', 'December'
-            ];
-            
-            // Format the date
-            const day = today.getDate();
-            const month = months[today.getMonth()];
-            const year = today.getFullYear();
-            
-            // Set the formatted date in the desired format
-            dateDisplay.textContent = `Today · ${day} ${month} ${year}`;
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = now.toLocaleDateString('en-US', options);
+            document.querySelector('.date-display').textContent = formattedDate;
         });
     </script>
 </body>

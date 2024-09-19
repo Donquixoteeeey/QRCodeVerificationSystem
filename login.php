@@ -14,7 +14,7 @@
             height: 100vh;
             background-color: #f0f0f0;
             font-family: 'Istok Web', sans-serif;
-            background: url('img/Blue Backround Enhanced.png') no-repeat center center fixed; /* Replace with your image URL */
+            background: url('img/Blue Backround Enhanced.png') no-repeat center center fixed;
             background-size: cover;
         }
 
@@ -59,7 +59,7 @@
             margin: 20px;
             z-index: 2;
             font-family: 'Istok Web', sans-serif;
-            white-space: nowrap; /* Prevent text from wrapping */
+            white-space: nowrap;
         }
 
         .description {
@@ -113,19 +113,20 @@
             height: 100px;
             display: block;
             margin: 0 auto 40px;
+            margin-bottom: 50px;
         }
 
         .input-container {
             position: relative;
             width: 100%;
-            max-width: 400px; /* Adjust width if needed */
+            max-width: 400px;
             margin-bottom: 20px;
         }
 
         .input-container input {
             width: 300px;
             padding: 10px 0;
-            padding-left: 40px; /* Space for icon */
+            padding-left: 40px;
             margin: 0;
             border: none;
             border-bottom: 2px solid #ddd;
@@ -135,10 +136,20 @@
 
         .input-container i {
             position: absolute;
-            left: 10px; /* Space between icon and input */
+            left: 10px;
             top: 50%;
             transform: translateY(-50%);
-            color: #aaa; /* Icon color */
+            color: #aaa;
+        }
+
+        .view-password {
+            position: absolute;
+            right: 10px;
+            margin-left: 290px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #aaa;
         }
 
         .login-container button {
@@ -158,6 +169,20 @@
         .login-container button:hover {
             background-color: #0056b3;
         }
+
+        .forgot-password {
+            display: block;
+            margin-top: 10px;
+            margin-left: 210px;
+            color: #0056b3;
+            text-decoration: none;
+            font-size: 14px;
+            font-family: 'Istok Web', sans-serif;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -173,15 +198,28 @@
         <img src="img/QR CODE VERIFICATION SYSTEM LOGO.png" alt="Login Form Image">
         <form action="login-handler.php" method="post">
             <div class="input-container">
-                <i class="fas fa-user"></i> <!-- Font Awesome icon -->
+                <i class="fas fa-user"></i>
                 <input type="text" id="username" name="username" placeholder="Username" required>
             </div>
             <div class="input-container">
-                <i class="fas fa-lock"></i> <!-- Font Awesome icon -->
+                <i class="fas fa-lock"></i>
                 <input type="password" id="password" name="password" placeholder="Password" required>
+                <i class="fas fa-eye view-password" id="togglePassword"></i>
             </div>
+            <a href="forgot-password.php" class="forgot-password">Forgot Password?</a>
             <button type="submit">LOGIN</button>
         </form>
     </div>
+
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password');
+
+        togglePassword.addEventListener('click', function () {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
 </body>
 </html>

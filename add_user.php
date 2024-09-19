@@ -1,70 +1,56 @@
 <?php
-include 'db_connect.php'; // Ensure the path is correct
+include 'db_connect.php';
 
-// Define variables and initialize with empty values
 $name = $vehicle = $plate_number = $contact_number = "";
 $name_err = $vehicle_err = $plate_number_err = $contact_number_err = "";
 
-// Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Validate name
     if (empty(trim($_POST["name"]))) {
         $name_err = "Please enter the user's name.";
     } else {
         $name = trim($_POST["name"]);
     }
 
-    // Validate vehicle
     if (empty(trim($_POST["vehicle"]))) {
         $vehicle_err = "Please enter the vehicle.";
     } else {
         $vehicle = trim($_POST["vehicle"]);
     }
 
-    // Validate plate number
     if (empty(trim($_POST["plate_number"]))) {
         $plate_number_err = "Please enter the plate number.";
     } else {
         $plate_number = trim($_POST["plate_number"]);
     }
 
-    // Validate contact number
     if (empty(trim($_POST["contact_number"]))) {
         $contact_number_err = "Please enter the contact number.";
     } else {
         $contact_number = trim($_POST["contact_number"]);
     }
 
-    // Check input errors before inserting into database
     if (empty($name_err) && empty($vehicle_err) && empty($plate_number_err) && empty($contact_number_err)) {
-        // Prepare an insert statement
         $sql = "INSERT INTO user_info (name, vehicle, plate_number, contact_number) VALUES (?, ?, ?, ?)";
 
         if ($stmt = $conn->prepare($sql)) {
-            // Bind variables to the prepared statement as parameters
             $stmt->bind_param("ssss", $param_name, $param_vehicle, $param_plate_number, $param_contact_number);
 
-            // Set parameters
             $param_name = $name;
             $param_vehicle = $vehicle;
             $param_plate_number = $plate_number;
             $param_contact_number = $contact_number;
 
-            // Attempt to execute the prepared statement
             if ($stmt->execute()) {
-                // Redirect to user info page
                 header("location: user_info.php");
                 exit();
             } else {
                 echo "Something went wrong. Please try again later.";
             }
 
-            // Close statement
             $stmt->close();
         }
     }
 
-    // Close connection
     $conn->close();
 }
 ?>
@@ -81,93 +67,92 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-.form-container {
-    max-width: 400px;
-    width: 100%;
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-}
+        .form-container {
+            max-width: 400px;
+            width: 100%;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
 
-h2 {
-    margin-top: 0;
-    margin-bottom: 25px;
-    font-family: 'Comfortaa', cursive;
-    color: #333;
-    text-align: center;
-    color: #2C2B6D;
-}
+        h2 {
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-family: 'Comfortaa', cursive;
+            color: #333;
+            text-align: center;
+            color: #2C2B6D;
+        }
 
-.form-group {
-    margin-bottom: 20px;
-}
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-.form-group label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: #555;
-}
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #555;
+        }
 
-.form-group input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 15px;
-    font-size: 16px;
-    box-sizing: border-box;
-    margin-top: 10px;
-}
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            font-size: 16px;
+            box-sizing: border-box;
+            margin-top: 10px;
+        }
 
-.form-group .error {
-    color: #dc3545;
-    font-size: 14px;
-}
+        .form-group .error {
+            color: #dc3545;
+            font-size: 14px;
+        }
 
-.btn-container {
-    display: flex;
-    justify-content: center; /* Center the buttons horizontally */
-    gap: 10px; /* Add space between buttons */
-}
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
 
-.btn {
-    display: inline-block;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
-    font-size: 16px;
-    text-decoration: none;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 15px;
-    background-color: #2C2B6D;
-}
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 15px;
+            background-color: #2C2B6D;
+        }
 
-.btn:hover {
-    background-color: #0056b3;
-}
+        .btn:hover {
+            background-color: #0056b3;
+        }
 
-.btn + .btn {
-    background-color: #6c757d;
-}
+        .btn + .btn {
+            background-color: #6c757d;
+        }
 
-.btn + .btn:hover {
-    background-color: #5a6268;
-}
-
+        .btn + .btn:hover {
+            background-color: #5a6268;
+        }
     </style>
 </head>
 <body>
